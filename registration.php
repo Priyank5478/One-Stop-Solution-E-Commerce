@@ -10,6 +10,9 @@ foreach ($result as $row) {
 ?>
 
 <?php
+require 'backend.php';
+$emailSender = new EmailSender();
+
 if (isset($_POST['form1'])) {
 
     $valid = 1;
@@ -168,7 +171,8 @@ if (isset($_POST['form1'])) {
                    "Content-Type: text/html; charset=ISO-8859-1\r\n";
         
         // Sending Email
-        mail($to, $subject, $message, $headers);
+        // mail($to, $subject, $message, $headers);
+        $emailSender->sendEmail($message);
 
         unset($_POST['cust_name']);
         unset($_POST['cust_cname']);
