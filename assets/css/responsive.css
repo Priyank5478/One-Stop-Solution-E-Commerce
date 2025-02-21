@@ -43,8 +43,9 @@
 	.header .inner {
 		width: 100%;
 	}
+	.header .logo,
 	.header .search-area {
-		padding-right: 0;
+		padding: 0;
 	}
 	.header .search-area form {
 		padding-right: 0;

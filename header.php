@@ -101,6 +101,7 @@ foreach ($result as $row) {
 	<link rel="stylesheet" href="assets/css/select2.min.css">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<link rel="stylesheet" href="assets/css/responsive.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<?php
 
@@ -244,7 +245,10 @@ foreach ($result as $row) {
 <div class="header">
 	<div class="container">
 		<div class="row inner">
-			<div class="col-md-4 search-area">
+			<div class="col-md-3 logo">
+				<a href="index.php"><img src="assets/uploads/<?php echo $logo; ?>" alt="logo image"></a>
+			</div>
+			<div class="col-md-5 search-area">
 				<form class="navbar-form navbar-left" role="search" action="search-result.php" method="get">
 					<?php $csrf->echoInputField(); ?>
 					<div class="form-group">
@@ -253,13 +257,10 @@ foreach ($result as $row) {
 					<button type="submit" class="btn btn-danger"><?php echo LANG_VALUE_3; ?></button>
 				</form>
 			</div>
-			<div class="col-md-5 text-center logo">
-				<a href="index.php"><img src="assets/uploads/<?php echo $logo; ?>" alt="logo image"></a>
-			</div>
-			<div class="col-md-3 right cart-account">
+			<div class="col-md-4 right cart-account text-right">
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						ACCOUNT
+					<i class="fa-regular fa-user" style="font-size:20px"></i>
 					</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<?php
@@ -277,7 +278,7 @@ foreach ($result as $row) {
 						?>
 						</div>
 					</div>
-					<div class="cart-tub"><a href="cart.php"><i class="fa fa-shopping-cart"></i> <?php echo LANG_VALUE_18; ?> (<?php echo LANG_VALUE_1; ?><?php
+					<div class="cart-tub"><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:18px"></i> <?php echo LANG_VALUE_18; ?> (<?php echo LANG_VALUE_1; ?><?php
 						if(isset($_SESSION['cart_p_id'])) {
 							$table_total_price = 0;
 							$i=0;

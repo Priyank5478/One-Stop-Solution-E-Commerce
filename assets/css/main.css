@@ -76,7 +76,8 @@ a:hover {
 .header {
   width: 100%;
   height: auto;
-  background: #fbf9f9;
+  background: #131921;
+  color: #fff;
 }
 
 .header .container {
@@ -149,6 +150,9 @@ a:hover {
 .header .right.cart-account .dropdown button {
   background: none;
 }
+.header .right.cart-account .dropdown button:hover {
+  color: #fff;
+}
 .header .right.cart-account .dropdown button:focus {
   outline: none;
   box-shadow: none;
@@ -156,6 +160,9 @@ a:hover {
 .header .right.cart-account .cart-tub {
   display: inline-block;
   margin: 0 10px;
+}
+.header .right.cart-account .cart-tub a {
+  color: #fff;
 }
 .header .navbar-form .search-top {
   width: 100%;
@@ -238,16 +245,17 @@ a:hover {
 .menu > ul > li a {
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 700;
   padding: 1.5em 20px;
   display: block;
   color: #000;
+  font-size: 16px;
 }
 
 .menu > ul > li > ul {
   display: none;
   width: 100%;
-  background: #f0f0f0;
+  background: #fbf9f9;
   padding: 20px;
   position: absolute;
   z-index: 999999;
@@ -286,6 +294,10 @@ a:hover {
   color: #333;
 }
 
+.menu > ul > li > ul > li a:hover {
+  color: #000;
+}
+
 .menu > ul > li > ul > li > ul {
   display: block;
   padding: 0;
@@ -314,8 +326,12 @@ a:hover {
 
 .menu > ul > li > ul > li > ul > li a {
   border: 0;
+  font-weight: 400;
+  font-size: 14px;
 }
-
+.menu > ul > li > ul > li > ul > li a:hover {
+  text-decoration: underline;
+}
 .menu > ul > li > ul.normal-sub {
   width: 220px;
   left: auto;
