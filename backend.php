@@ -39,11 +39,9 @@ class EmailSender extends PHPMailer
             // Send the email
             $this->send();
             $email = "";
-            echo "send sucessfully";
             return "Email has been sent with the receipt.";
 
         } catch (Exception $e) {
-            echo "error in sending";
             return "Email could not be sent. Please contact +91 9988776655. Error: {$this->ErrorInfo}";
         }
     }
