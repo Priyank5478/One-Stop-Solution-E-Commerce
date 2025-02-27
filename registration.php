@@ -162,7 +162,7 @@ if (isset($_POST['form1'])) {
         $message = '
 '.LANG_VALUE_151.'<br><br>
 
-<a href="'.$verify_link.'">'.$verify_link.'</a>';
+<a href="'.$verify_link.'" class="verify-btn">Verify Email</a>';
 
         $headers = "From: noreply@" . BASE_URL . "\r\n" .
                    "Reply-To: noreply@" . BASE_URL . "\r\n" .
@@ -172,7 +172,7 @@ if (isset($_POST['form1'])) {
         
         // Sending Email
         // mail($to, $subject, $message, $headers);
-        $emailSender->sendEmail($message);
+        $emailSender->verifyCustomer($message,$to);
 
         unset($_POST['cust_name']);
         unset($_POST['cust_cname']);
@@ -199,9 +199,6 @@ if (isset($_POST['form1'])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="user-content">
-
-                    
-
                     <form action="" method="post">
                         <?php $csrf->echoInputField(); ?>
                         <div class="row">
