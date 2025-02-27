@@ -1,8 +1,8 @@
 <?php
 // session_start();
 
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 require 'vendor/autoload.php'; // Adjust this path if you're not using Composer
 // include("../connection/connect.php");
@@ -16,38 +16,39 @@ class EmailSender extends PHPMailer
 
         // SMTP Configuration
         $this->isSMTP();
-        $this->Host = 'smtp.hostinger.com';
-        $this->SMTPAuth = true;
-        $this->Username = 'priyank.lathiya@marelab.in'; // Replace with your email
-        $this->Password = 'Priyank@#319'; // Replace with your email password or app password
+        $this->Host       = 'smtp.hostinger.com';
+        $this->SMTPAuth   = true;
+        $this->Username   = 'priyank.lathiya@marelabservices.com'; // Replace with your email
+        $this->Password   = 'w1Sq5F3m:/';                          // Replace with your email password or app password
         $this->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $this->Port = 465;
+        $this->Port       = 465;
     }
 
-    public function sendEmail($body)
+    public function sendEmail($body,$email,$subject)
     {
         try {
             // Set recipient and content
-            $this->setFrom('priyank.lathiya@marelab.in', 'O.F.O.S');
-            $this->addAddress('lathiyapriyank05@gmail.com', 'priyank' ?? 'Customer');
+            $this->setFrom('priyank.lathiya@marelabservices.com', 'One-Stop-solution');
+            $this->addAddress($email, 'priyank' ?? 'Customer');
 
             // Email content
             $this->isHTML(true);
-            $this->Subject = "priyank test";
-            $this->Body = $body;
+            $this->Subject = $subject;
+            $this->Body    = $body;
 
             // Send the email
             $this->send();
             $email = "";
             return "Email has been sent with the receipt.";
+
         } catch (Exception $e) {
             return "Email could not be sent. Please contact +91 9988776655. Error: {$this->ErrorInfo}";
         }
     }
 
-    public function orderTracking($email,$userID,$db)
+    public function orderTracking($email, $userID, $db)
     {
-        // Generate a random tracking number
+                                                                   // Generate a random tracking number
         $trackingNumber = mt_rand(10000000000000, 99999999999999); // 14-digit random number
 
         // Create the tracking number string with a "#" prefix
@@ -56,7 +57,7 @@ class EmailSender extends PHPMailer
         // HTML email content
         // $emailSubject = "Your Order Tracking Number";
         $sql = "INSERT INTO order_tracking (cus_id, o_tracking_num) VALUES($userID, '$trackingNumber')";
-        mysqli_query($db,$sql);
+        mysqli_query($db, $sql);
         $emailContent = "
         <html>
         <head>
@@ -146,25 +147,25 @@ class EmailSender extends PHPMailer
 
     public function getUserData($formId, $db)
     {
-        $SQL = "SELECT * FROM users_orders WHERE o_id  = $formId";
+        $SQL    = "SELECT * FROM users_orders WHERE o_id  = $formId";
         $result = mysqli_query($db, $SQL);
-        $order = mysqli_fetch_assoc($result);
+        $order  = mysqli_fetch_assoc($result);
 
-        $userSQL = "SELECT * FROM users WHERE u_id = " . $order['u_id'] . "";
-        $userResult = mysqli_query($db, $userSQL);
-        $user = mysqli_fetch_assoc($userResult);
-        $user[] = $order;
-        $masterData['userdata'] = $user;
+        $userSQL                 = "SELECT * FROM users WHERE u_id = " . $order['u_id'] . "";
+        $userResult              = mysqli_query($db, $userSQL);
+        $user                    = mysqli_fetch_assoc($userResult);
+        $user[]                  = $order;
+        $masterData['userdata']  = $user;
         $masterData['orderdata'] = $order;
         return $masterData;
     }
     public function ordeProcessing($formId, $db)
     {
-        $userData = $this->getUserData($formId, $db);
-        $otp = rand(100000, 999999);
-        $sql = "UPDATE users_orders SET o_otp = $otp WHERE o_id = $formId";
+        $userData   = $this->getUserData($formId, $db);
+        $otp        = rand(100000, 999999);
+        $sql        = "UPDATE users_orders SET o_otp = $otp WHERE o_id = $formId";
         $userResult = mysqli_query($db, $sql);
-        $body = "<!DOCTYPE html>
+        $body       = "<!DOCTYPE html>
             <html>
             <head>
             <style>
@@ -244,11 +245,11 @@ class EmailSender extends PHPMailer
         return $this->sendEmail($body, $userData['userdata']['email'], $subject);
     }
     public function ordeRejected($formId, $db)
-    { 
+    {
         $userData = $this->getUserData($formId, $db);
-        // $SQL = "INSERT INTO users_orders(u_id, res_id, title, quantity, price) values"; 
+        // $SQL = "INSERT INTO users_orders(u_id, res_id, title, quantity, price) values";
         $SQL = "INSERT INTO cancel_orders(u_id, res_id, title, quantity, price) VALUES('" . $formId . "', '" . $userData['orderdata']["res_id"] . "', '" . $userData['orderdata']["title"] . "', '" . $userData['orderdata']["quantity"] . "', '" . $userData['orderdata']["price"] . "')";
-        mysqli_query($db,$SQL);
+        mysqli_query($db, $SQL);
 
         $body = "<!DOCTYPE html>
             <html>
@@ -322,30 +323,30 @@ class EmailSender extends PHPMailer
             </html>
             ";
         $subject = "Your Order IS Cancelled";
-        mysqli_query($db,"DELETE FROM users_orders WHERE o_id = '".$formId."'");
+        mysqli_query($db, "DELETE FROM users_orders WHERE o_id = '" . $formId . "'");
         return $this->sendEmail($body, $userData['userdata']['email'], $subject);
     }
     public function deliveriBoy($db, $id, $formId)
     {
-        $userSQL = "SELECT * FROM delivery_partners  WHERE id = $id";
-        $result = mysqli_query($db, $userSQL);
+        $userSQL         = "SELECT * FROM delivery_partners  WHERE id = $id";
+        $result          = mysqli_query($db, $userSQL);
         $deliveryBoyData = mysqli_fetch_assoc($result);
 
-        $orderSQL = "SELECT * FROM users_orders WHERE o_id = $formId";
+        $orderSQL    = "SELECT * FROM users_orders WHERE o_id = $formId";
         $OrderResult = mysqli_query($db, $orderSQL);
-        $orderData = mysqli_fetch_assoc($OrderResult);
+        $orderData   = mysqli_fetch_assoc($OrderResult);
         $totalAmount = $orderData['price'] * $orderData['quantity'];
 
-        $resSQL = "SELECT * FROM restaurant WHERE rs_id = " . $orderData['res_id'] . "";
+        $resSQL    = "SELECT * FROM restaurant WHERE rs_id = " . $orderData['res_id'] . "";
         $resResult = mysqli_query($db, $resSQL);
-        $resData = mysqli_fetch_assoc($resResult);
+        $resData   = mysqli_fetch_assoc($resResult);
 
-        $uSQL = "SELECT * FROM users WHERE u_id = " . $orderData['u_id'] . "";
+        $uSQL    = "SELECT * FROM users WHERE u_id = " . $orderData['u_id'] . "";
         $uResult = mysqli_query($db, $uSQL);
-        $uData = mysqli_fetch_assoc($uResult);
+        $uData   = mysqli_fetch_assoc($uResult);
 
         $subject = "Order ready for delivery.";
-        $body = "<!DOCTYPE html>
+        $body    = "<!DOCTYPE html>
                 <html lang='en'>
                 <head>
                     <meta charset='UTF-8'>
@@ -471,7 +472,7 @@ class EmailSender extends PHPMailer
                             <p>Thank you for your excellent service! We're counting on you to complete this delivery successfully.</p>
                             <p>Best regards,</p>
                             <p><strong>O.F.O.S</strong> Team.</p>
-                            <p class='verify-customer'><a href='http://localhost/onlinefood/otpverification.php?o_id=".$formId."'><strong>Click To Verify Customer</a></strong></p>
+                            <p class='verify-customer'><a href='http://localhost/onlinefood/otpverification.php?o_id=" . $formId . "'><strong>Click To Verify Customer</a></strong></p>
                         </div>
 
                         <div class='footer'>
@@ -486,5 +487,93 @@ class EmailSender extends PHPMailer
                 </html>
                 ";
         return $this->sendEmail($body, $deliveryBoyData['email'], $subject);
+    }
+    public function verifyCustomer($link,$email)
+    {
+        $body = '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Email Verification</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f6f9;
+                    color: #333;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    width: 100%;
+                    max-width: 600px;
+                    margin: 20px auto;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                }
+                .header {
+                    background-color: #4CAF50;
+                    padding: 20px;
+                    text-align: center;
+                    color: white;
+                    font-size: 24px;
+                }
+                .content {
+                    padding: 20px;
+                    font-size: 16px;
+                    line-height: 1.6;
+                    color: #555;
+                }
+                .verify-btn {
+                    display: block;
+                    width: 200px;
+                    margin: 20px auto;
+                    padding: 12px;
+                    text-align: center;
+                    background-color: #4CAF50;
+                    color: white;
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-decoration: none;
+                    border-radius: 5px;
+                }
+                .message {
+                    text-align: center;
+                    font-size: 14px;
+                    color: #777;
+                    margin-top: 20px;
+                }
+                .footer {
+                    padding: 15px;
+                    text-align: center;
+                    background-color: #f2f2f2;
+                    color: #999;
+                    font-size: 12px;
+                }
+            </style>
+        </head>
+        <body>
+        
+        <div class="container">
+            <div class="header">Email Verification</div>
+            <div class="content">
+                <p>Dear User,</p>
+                <p>'.$link.'</p>
+                <p>If you did not sign up for this account, please ignore this email.</p>
+            </div>
+            <div class="message">
+                This link will expire in 24 hours for security reasons.
+            </div>
+            <div class="footer">
+                &copy; 2025 One-Stop-Solution. All rights reserved.
+            </div>
+        </div>
+        
+        </body>
+        </html>';        
+        $subject = "Verified As You Customer";
+        return $this->sendEmail($body,$email,$subject);
     }
 }
