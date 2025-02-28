@@ -303,22 +303,22 @@ foreach ($result as $row) {
 				    ?>)</a></div>
 			</div>
 			<div class="col-md-3 right oss-services text-right">
-			<?php
-						$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
-						$statement->execute();
-						$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
-						foreach ($result as $row) {
-							$about_title = $row['about_title'];
-							$faq_title = $row['faq_title'];
-							$contact_title = $row['contact_title'];
-						}
-					?>
-					<ul>
-						<li><a href="oss-help.php">Help</a></li>
-						<li><a href="about.php"><?php echo $about_title; ?></a></li>
-						<li><a href="faq.php"><?php echo $faq_title; ?></a></li>
-						<li><a href="contact.php"><?php echo $contact_title; ?></a></li>
-					</ul>
+				<?php
+					$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+					$statement->execute();
+					$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
+					foreach ($result as $row) {
+						$about_title = $row['about_title'];
+						$faq_title = $row['faq_title'];
+						$contact_title = $row['contact_title'];
+					}
+				?>
+				<ul>
+					<li><a href="oss-help.php">Help</a></li>
+					<li><a href="about.php"><?php echo $about_title; ?></a></li>
+					<li><a href="faq.php"><?php echo $faq_title; ?></a></li>
+					<li><a href="contact.php"><?php echo $contact_title; ?></a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
