@@ -245,10 +245,10 @@ foreach ($result as $row) {
 <div class="header">
 	<div class="container">
 		<div class="row inner">
-			<div class="col-md-3 logo">
+			<div class="col-md-2 logo">
 				<a href="index.php"><img src="assets/uploads/<?php echo $logo; ?>" alt="logo image"></a>
 			</div>
-			<div class="col-md-5 search-area">
+			<div class="col-md-4 search-area">
 				<form class="navbar-form navbar-left" role="search" action="search-result.php" method="get">
 					<?php $csrf->echoInputField(); ?>
 					<div class="form-group">
@@ -257,7 +257,7 @@ foreach ($result as $row) {
 					<button type="submit" class="btn btn-danger"><?php echo LANG_VALUE_3; ?></button>
 				</form>
 			</div>
-			<div class="col-md-4 right cart-account text-right">
+			<div class="col-md-3 right cart-account text-right">
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fa-regular fa-user" style="font-size:20px"></i>
@@ -300,7 +300,25 @@ foreach ($result as $row) {
 						} else {
 							echo '0.00';
 						}
-				?>)</a></div>
+				    ?>)</a></div>
+			</div>
+			<div class="col-md-3 right oss-services text-right">
+			<?php
+						$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+						$statement->execute();
+						$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
+						foreach ($result as $row) {
+							$about_title = $row['about_title'];
+							$faq_title = $row['faq_title'];
+							$contact_title = $row['contact_title'];
+						}
+					?>
+					<ul>
+						<li><a href="oss-help.php">Help</a></li>
+						<li><a href="about.php"><?php echo $about_title; ?></a></li>
+						<li><a href="faq.php"><?php echo $faq_title; ?></a></li>
+						<li><a href="contact.php"><?php echo $contact_title; ?></a></li>
+					</ul>
 			</div>
 		</div>
 	</div>
