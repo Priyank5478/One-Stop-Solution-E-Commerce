@@ -21,7 +21,7 @@ foreach ($result as $row)
 <section class="home-newsletter">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-12">
 				<div class="single">
 					<?php
 			if(isset($_POST['form_subscribe']))
@@ -101,16 +101,58 @@ This link will be active only for 24 hours.
 			}
 			?>
 				<form action="" method="post">
-					<?php $csrf->echoInputField(); ?>
-					<h2><?php echo LANG_VALUE_93; ?></h2>
-					<div class="input-group">
-			        	<input type="email" class="form-control" placeholder="<?php echo LANG_VALUE_95; ?>" name="email_subscribe">
-			         	<span class="input-group-btn">
-			         	<button class="btn btn-theme" type="submit" name="form_subscribe"><?php echo LANG_VALUE_92; ?></button>
-			         	</span>
-			        </div>
+					<div class="news-latter">
+						<div class="news-latter-content">
+							<i class="fa-regular fa-envelope" style="color: #ffffff;"></i>
+							<span>New To One Stop Solution? <br> Subscribe to our newsletter to get our updates on our latest offers!</span>
+						</div>
+						<div>
+							<?php $csrf->echoInputField(); ?>
+							<div class="input-group">
+								<input type="email" class="form-control" placeholder="<?php echo LANG_VALUE_95; ?>" name="email_subscribe">
+								<span class="input-group-btn">
+								<button class="btn btn-theme" type="submit" name="form_subscribe"><?php echo LANG_VALUE_92; ?></button>
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
 				</form>
+				<div class="footer-links">
+					<div class="certified-company"><img src="./Image/certified-company.png" alt="Certified Company"></div>
+					<div class="links-list">
+						<?php
+							$statement = $pdo->prepare("SELECT * FROM tbl_page WHERE id=1");
+							$statement->execute();
+							$result = $statement->fetchAll(PDO::FETCH_ASSOC);		
+							foreach ($result as $row) {
+								$about_title = $row['about_title'];
+								$faq_title = $row['faq_title'];
+								$contact_title = $row['contact_title'];
+							}
+						?>
+						<ul>
+							<li><strong>SHOP</strong></li>
+							<li><a href="./product-category.php?id=1">Mens</li>
+							<li><a href="./product-category.php?id=2">Womens</li>
+							<li><a href="./product-category.php?id=3">Kids</li>
+						</ul>
+						<ul>
+							<li><strong>HELP</strong></li>
+							<li><a href="faq.php"><?php echo $faq_title; ?></a></li>
+							<li><a href="oss-help.php">Returns</a></li>
+							<li><a href="oss-help.php">Shipping</a></li>
+							<li><a href="oss-help.php">Payment</a></li>
+						</ul>
+						<ul>
+							<li><strong>COMPANY</strong></li>
+							<li><a href="about.php"><?php echo $about_title; ?></a></li>
+							<li><a href="#">Wholesale</a></li>
+							<li><a href="#">Modern Slavery Statement</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="payment-methods text-right"><img src="./Image/New-Payment-logo.png" alt="New Payment Methods"></div>
 			</div>
 		</div>
 	</div>

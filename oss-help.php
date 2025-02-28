@@ -1,7 +1,7 @@
 <?php require_once('header.php'); ?>
 <div class="page oss-help">
     <div class="container">
-        <h1>Help Center</h1>
+        <h1 class="text-center">Help Center</h1>
         <div class="tabs">
             <div class="tab-buttons">
                 <button class="tab-btn active" data-tab="shipping">Shipping</button>
