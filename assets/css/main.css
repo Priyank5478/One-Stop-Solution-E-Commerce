@@ -78,14 +78,18 @@ a:hover {
   height: auto;
   background: #131921;
   color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 9999999999;
 }
 
 .header .container {
-  padding: 16px 0;
+  padding: 0;
 }
 .header .inner {
   height: auto;
   display: table;
+  width: 100%;
 }
 
 .header .logo {
@@ -96,7 +100,8 @@ a:hover {
 
 .header .logo img {
   max-width: 100%;
-  height: 80px;
+  height: 100px;
+  padding-bottom: 10px;
 }
 
 .header .navbar-form .form-control {
@@ -132,7 +137,6 @@ a:hover {
   float: right;
   margin-bottom: 0;
 }
-#fbf9f9
 .header .right ul li {
   list-style-type: none;
   float: left;
