@@ -18,8 +18,8 @@ class EmailSender extends PHPMailer
         $this->isSMTP();
         $this->Host       = 'smtp.hostinger.com';
         $this->SMTPAuth   = true;
-        $this->Username   = 'priyank.lathiya@marelabservices.com'; // Replace with your email
-        $this->Password   = 'w1Sq5F3m:/';                          // Replace with your email password or app password
+        $this->Username   =  // Replace with your email
+        $this->Password   = // Replace with your email password or app password
         $this->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->Port       = 465;
     }
@@ -28,8 +28,8 @@ class EmailSender extends PHPMailer
     {
         try {
             // Set recipient and content
-            $this->setFrom('priyank.lathiya@marelabservices.com', 'One-Stop-solution');
-            $this->addAddress($email, 'priyank' ?? 'Customer');
+            $this->setFrom('owener_mail@gmail.com', 'One-Stop-solution');
+            $this->addAddress($email, 'Owner' ?? 'Customer');
 
             // Email content
             $this->isHTML(true);
