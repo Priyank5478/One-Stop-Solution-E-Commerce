@@ -38,6 +38,7 @@ A dynamic e-commerce web application built using PHP, MySQL, JavaScript, and HTM
 ## 📁 Folder Structure
 
 /one-stop-solution/
+
 ├── admin/ # Admin dashboard
 ├── assets/ # CSS, JS, images
 ├── payment/ # PayPal integration
